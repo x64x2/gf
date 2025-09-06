@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<TITLE>Solve sudoku!</TITLE>
+<SCRIPT type="text/javascript" language="JavaScript" src="main.js"></SCRIPT>
+</HEAD>
+<BODY onload="resize()" onresize="resize()" onkeypress="handleKey(event)" onkeydown="handleKey(event)">
+<div id="popup_overlay" style='position: absolute; top:0px; left:0px; background-color: lightgrey; z-index:10; opacity:0.5;display:none' onclick="hidePopup()">
+</div>
+<div id="popup" style='position: fixed; top:50%; left:50%; z-index:11; display:none;'>
+<table border = 1 style="border:solid;background-color: #E0EEE0; border-radius:10px">
+	<script type="text/javascript" language="JavaScript">
+		for (var i = 0; i < 3; i++) {
+			document.write('<tr align = "center">')
+			for (var j = 0; j < 3; j++) {
+				var digit = i*3 + j + 1
+				document.write('<td style="border:solid 1px" height = "75" width = "75" onclick="enterDigit(' + digit + ')"><b>' + digit + '</b></td>')
+			}
+			document.write('</tr>')
+		}
+	</script>
+	<tr align = "center"><td style="border:solid 1px" height="75" onclick="enterDigit(0)"><b>Clear</b></td><td style="border:solid 1px" height="75" colspan=2 onclick="hidePopup()"><b>Cancel</b></td></tr>
+</table>
+</div>
+<div id="info" style='position: fixed; z-index:12; display:none; width:200px; height:80px; border:5px solid #B4CDCD; background-color: #D1EEEE; border-radius:10px; text-align:center;line-height: 80px;'>
+You win!
+</div>
+<div id="all" style = 'position: absolute; top:50%; left:50%'">
+<br>
+<table width="445">
+<tr>
+	<td>
+		<b>Choose difficulty:</b><br>
+		<select name="difficulty" onchange ="difficultLevel=this.options[selectedIndex].value">
+			<option value="22">Trivial</option>
+			<option value="32">Easy</option>
+			<option selected value="42">Medium</option>
+			<option value="52" >Hard</option>
+			<option value="58">Ultra (use it on your risk)</option>
+		</select><br><br>
+	</td>
+	<td style = "vertical-align: bottom" align="right">
+		<input type="button" id="hint" style="width: 10em" value="Hint" onClick="hint()"><br>
+		&nbspRemains hints: <span id="hintsSpan"></span>
+	</td>
+	</tr>
+<tr>
+	<td><input type="button" value="Start new game" onClick="init(); redraw()"></td>
+	<td style = "vertical-align: bottom" align="right">Current time: <span id="timer">00:00</span><br></td>
+</tr>
+</table>
+<table id = "mainTable" border = "1" height = "450" width = "450">
+	<script type="text/javascript" language="JavaScript">
+		init();//init data
+		var i,j
+		for(i = 0; i < 9; i++) {
+			document.write('<tr align = "center">')
+			for(j = 0; j < 9; j++) {
+				document.write('<td')
+				if (i%3 == 2 && j%3 == 2)
+					document.write(' style = "border-right:2px solid #000000; border-bottom:2px solid #000000"')
+				else if (j%3 == 2)
+					document.write(' style = "border-right:2px solid #000000"')
+				else if (i%3 == 2)
+					document.write(' style = "border-bottom:2px solid #000000"')
+				document.write(' height = "45" width = "45" id = td' + i+j + ' onClick="handleClick(this)"><b>' + data[i][j] + '</b></td>')
+			}
+			document.write('</tr>')	
+		}
+	</script>
+</table><br><br>
+</div>
+</BODY>
+</HTML>
